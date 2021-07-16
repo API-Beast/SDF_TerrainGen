@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://shaders/generate_slope_data.shader" type="Shader" id=1]
+[ext_resource path="res://materials/slope_height_masks.exr" type="Texture" id=2]
+
+[sub_resource type="ViewportTexture" id=1]
+viewport_path = NodePath("Height")
+
+[sub_resource type="ShaderMaterial" id=2]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/_deep_sea_line = -4.0
+shader_param/_beach_line = 1.5
+shader_param/_grass_line = 4.0
+shader_param/_snow_line = 5.0
+shader_param/_height_scale = 0.25
+shader_param/_lod = 2.0
+shader_param/_base_data = SubResource( 1 )
+shader_param/_slope_heights = ExtResource( 2 )
+
+[node name="SlopeLookup" type="ColorRect"]
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}

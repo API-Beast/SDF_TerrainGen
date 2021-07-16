@@ -1,0 +1,40 @@
+[gd_resource type="ShaderMaterial" load_steps=4 format=2]
+
+[ext_resource path="res://shaders/render_map.shader" type="Shader" id=1]
+
+[sub_resource type="ViewportTexture" id=1]
+flags = 5
+viewport_path = NodePath("AlbedoRoughness")
+
+[sub_resource type="ViewportTexture" id=2]
+flags = 5
+viewport_path = NodePath("Height")
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource( 1 )
+shader_param/_contrast = 1.698
+shader_param/_exposure = 0.224
+shader_param/_ao_samples = 16
+shader_param/_ao_distance = 1.0
+shader_param/_ao_sample_bias = 3.0
+shader_param/_ao_ray_height = 20.0
+shader_param/_ao_strength = 1.556
+shader_param/_ao_lod = 4.0
+shader_param/_light_shape = 1.973
+shader_param/_2d_view_distortion = 0.0
+shader_param/_reflectivity = 0.0
+shader_param/_height_scale = 0.1
+shader_param/_mountain_peak_height = 600.0
+shader_param/_world_width = 12000.0
+shader_param/_sky_sun_position = -0.6
+shader_param/_sky_sun_height = 0.644
+shader_param/_sky_sun_direct_color = Color( 97.2, 94.502, 76.502, 0.0745098 )
+shader_param/_sky_sun_ambient_color = Color( 17, 15, 10, 1 )
+shader_param/_sky_ambient_color = Color( 0.8, 0.9, 1.06, 1 )
+shader_param/_sky_background_color = Color( 0.301961, 0.360784, 0.501961, 1 )
+shader_param/_water_fog_color = Color( 0.117647, 0.270588, 0.65098, 0.52549 )
+shader_param/_water_surface_color = Color( 0.133333, 0.34902, 0.592157, 1 )
+shader_param/_water_line_color = Color( 1, 1, 1, 0.172549 )
+shader_param/_height_data = SubResource( 2 )
+shader_param/_albedo_roughness = SubResource( 1 )

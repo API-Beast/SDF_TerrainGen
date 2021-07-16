@@ -1,0 +1,148 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://nodes/HeightmapGenerator.tscn" type="PackedScene" id=1]
+[ext_resource path="res://materials/height_masks.exr" type="Texture" id=2]
+[ext_resource path="res://shaders/generate_height.shader" type="Shader" id=3]
+[ext_resource path="res://nodes/2DTerrainRenderer.gd" type="Script" id=4]
+[ext_resource path="res://shaders/render_map.shader" type="Shader" id=5]
+[ext_resource path="res://shaders/generate_color_and_roughness.shader" type="Shader" id=6]
+[ext_resource path="res://shaders/generate_slope_data.shader" type="Shader" id=7]
+[ext_resource path="res://materials/hills_rgbr.exr" type="Texture" id=8]
+[ext_resource path="res://materials/mountains_rgbr.exr" type="Texture" id=9]
+[ext_resource path="res://materials/sea_floor_rgbr.exr" type="Texture" id=10]
+[ext_resource path="res://nodes/AlbedoRoughnessLookup.tscn" type="PackedScene" id=11]
+[ext_resource path="res://materials/cliffs_rgbr.exr" type="Texture" id=12]
+[ext_resource path="res://materials/slope_height_masks.exr" type="Texture" id=13]
+[ext_resource path="res://nodes/SlopeLookup.tscn" type="PackedScene" id=14]
+
+[sub_resource type="ViewportTexture" id=1]
+flags = 5
+viewport_path = NodePath("AlbedoRoughness")
+
+[sub_resource type="ViewportTexture" id=2]
+flags = 5
+viewport_path = NodePath("Height")
+
+[sub_resource type="ShaderMaterial" id=3]
+resource_local_to_scene = true
+shader = ExtResource( 5 )
+shader_param/_contrast = 1.698
+shader_param/_exposure = 0.224
+shader_param/_ao_samples = 16
+shader_param/_ao_distance = 1.0
+shader_param/_ao_sample_bias = 3.0
+shader_param/_ao_ray_height = 20.0
+shader_param/_ao_strength = 1.556
+shader_param/_ao_lod = 4.0
+shader_param/_light_shape = 1.973
+shader_param/_2d_view_distortion = 0.0
+shader_param/_reflectivity = 0.0
+shader_param/_height_scale = 0.1
+shader_param/_mountain_peak_height = 600.0
+shader_param/_world_width = 12000.0
+shader_param/_sky_sun_position = -0.6
+shader_param/_sky_sun_height = 0.644
+shader_param/_sky_sun_direct_color = Color( 97.2, 94.502, 76.502, 0.0745098 )
+shader_param/_sky_sun_ambient_color = Color( 17, 15, 10, 1 )
+shader_param/_sky_ambient_color = Color( 0.8, 0.9, 1.06, 1 )
+shader_param/_sky_background_color = Color( 0.301961, 0.360784, 0.501961, 1 )
+shader_param/_water_fog_color = Color( 0.117647, 0.270588, 0.65098, 0.52549 )
+shader_param/_water_surface_color = Color( 0.133333, 0.34902, 0.592157, 1 )
+shader_param/_water_line_color = Color( 1, 1, 1, 0.172549 )
+shader_param/_height_data = SubResource( 2 )
+shader_param/_albedo_roughness = SubResource( 1 )
+
+[sub_resource type="ViewportTexture" id=4]
+flags = 5
+viewport_path = NodePath("Height")
+
+[sub_resource type="ShaderMaterial" id=5]
+resource_local_to_scene = true
+shader = ExtResource( 6 )
+shader_param/_base_data = SubResource( 4 )
+shader_param/_cliffs_rgbr = ExtResource( 12 )
+shader_param/_surface_rgbr = ExtResource( 8 )
+shader_param/_mountain_rgbr = ExtResource( 9 )
+shader_param/_seafloor_rgbr = ExtResource( 10 )
+
+[sub_resource type="ViewportTexture" id=6]
+flags = 5
+viewport_path = NodePath("Height")
+
+[sub_resource type="ShaderMaterial" id=7]
+resource_local_to_scene = true
+shader = ExtResource( 7 )
+shader_param/_deep_sea_line = -4.0
+shader_param/_beach_line = 1.5
+shader_param/_grass_line = 4.0
+shader_param/_snow_line = 5.0
+shader_param/_height_scale = 0.1
+shader_param/_lod = 4.0
+shader_param/_base_data = SubResource( 6 )
+shader_param/_slope_heights = ExtResource( 13 )
+
+[sub_resource type="Image" id=8]
+data = {
+"data": PoolByteArray( 181, 217, 195, 68, 212, 114, 204, 68, 31, 55, 79, 68, 230, 103, 252, 68, 242, 109, 221, 67, 162, 146, 195, 68, 195, 69, 197, 68, 28, 25, 135, 68, 236, 218, 177, 66, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63, 26, 171, 129, 68, 151, 199, 244, 67, 171, 251, 154, 68, 24, 123, 8, 195, 0, 44, 113, 68, 166, 172, 143, 68, 126, 134, 205, 68, 237, 49, 84, 68, 96, 50, 182, 66, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63, 19, 7, 155, 67, 87, 200, 6, 68, 198, 178, 144, 68, 172, 92, 165, 68, 202, 102, 176, 68, 155, 219, 133, 68, 82, 0, 238, 67, 23, 199, 110, 68, 110, 241, 127, 65, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63, 146, 139, 3, 68, 129, 172, 210, 68, 210, 253, 9, 68, 123, 87, 160, 68, 166, 191, 52, 68, 12, 57, 196, 67, 28, 131, 23, 68, 82, 253, 212, 68, 132, 228, 92, 65, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63 ),
+"format": "RGBAFloat",
+"height": 1,
+"mipmaps": false,
+"width": 12
+}
+
+[sub_resource type="ImageTexture" id=9]
+flags = 0
+flags = 0
+image = SubResource( 8 )
+size = Vector2( 12, 1 )
+
+[sub_resource type="ShaderMaterial" id=10]
+shader = ExtResource( 3 )
+shader_param/_num_islands = 4
+shader_param/_world_seed = 182683.0
+shader_param/_islands = SubResource( 9 )
+shader_param/_material_heights = ExtResource( 2 )
+
+[node name="2DTerrainRenderer" type="ColorRect"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -0.912231
+margin_top = -5.61023
+margin_right = 1801.09
+margin_bottom = 2186.38
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AlbedoRoughness" type="Viewport" parent="."]
+size = Vector2( 2826, 2791 )
+transparent_bg = true
+keep_3d_linear = true
+render_target_v_flip = true
+render_target_update_mode = 1
+
+[node name="AlbedoRoughnessLookup" parent="AlbedoRoughness" instance=ExtResource( 11 )]
+material = SubResource( 5 )
+
+[node name="SlopeData" type="Viewport" parent="."]
+size = Vector2( 2826, 2791 )
+transparent_bg = true
+keep_3d_linear = true
+render_target_v_flip = true
+render_target_update_mode = 1
+
+[node name="SlopeLookup" parent="SlopeData" instance=ExtResource( 14 )]
+material = SubResource( 7 )
+
+[node name="Height" type="Viewport" parent="."]
+size = Vector2( 2826, 2791 )
+transparent_bg = true
+keep_3d_linear = true
+usage = 3
+render_target_v_flip = true
+render_target_update_mode = 1
+
+[node name="HeightmapGenerator" parent="Height" instance=ExtResource( 1 )]
+material = SubResource( 10 )

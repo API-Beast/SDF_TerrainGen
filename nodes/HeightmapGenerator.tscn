@@ -1,0 +1,36 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://shaders/generate_height.shader" type="Shader" id=1]
+[ext_resource path="res://materials/height_masks.exr" type="Texture" id=2]
+[ext_resource path="res://nodes/HeightmapGenerator.gd" type="Script" id=3]
+
+[sub_resource type="Image" id=1]
+data = {
+"data": PoolByteArray( 164, 74, 123, 68, 33, 215, 176, 68, 32, 179, 97, 67, 16, 12, 201, 68, 83, 178, 136, 68, 67, 210, 61, 68, 86, 94, 163, 68, 202, 5, 213, 68, 105, 188, 173, 66, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63, 216, 169, 211, 68, 167, 136, 58, 68, 152, 147, 235, 68, 32, 56, 74, 194, 11, 81, 48, 68, 38, 164, 180, 68, 153, 161, 138, 68, 163, 242, 195, 67, 31, 9, 189, 66, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63, 152, 165, 115, 68, 97, 24, 0, 68, 164, 220, 225, 68, 204, 148, 87, 67, 82, 134, 135, 68, 227, 109, 138, 68, 123, 245, 44, 68, 58, 131, 147, 67, 13, 142, 209, 65, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63, 113, 89, 65, 68, 52, 190, 127, 68, 247, 97, 28, 68, 201, 252, 16, 68, 69, 80, 61, 68, 141, 232, 134, 68, 63, 75, 6, 68, 76, 0, 126, 68, 238, 216, 231, 63, 0, 0, 122, 67, 0, 0, 200, 67, 0, 0, 128, 63 ),
+"format": "RGBAFloat",
+"height": 1,
+"mipmaps": false,
+"width": 12
+}
+
+[sub_resource type="ImageTexture" id=2]
+flags = 0
+flags = 0
+image = SubResource( 1 )
+size = Vector2( 12, 1 )
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 1 )
+shader_param/_num_islands = 4
+shader_param/_world_seed = 20885.6
+shader_param/_islands = SubResource( 2 )
+shader_param/_material_heights = ExtResource( 2 )
+
+[node name="HeightmapGenerator" type="ColorRect"]
+material = SubResource( 3 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
